@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Laundry - Layanan Laundry Terpercaya di Tulungagung</title>
+  <meta name="description" content="Family Laundry - Layanan laundry kiloan dan satuan di Tulungagung. Bersih, wangi, higienis, dan tepat waktu.">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/payment.css">
+  <link rel="stylesheet" href="assets/css/auth.css">
+  <link rel="stylesheet" href="assets/css/tailwind.output.css">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <!-- Small per-page styles were moved to `assets/css/style.css` for consistency -->
+</head>
+<body>
+  <!-- Auth Modal (Login / Register) -->
+  <div class="auth-modal-backdrop" id="authBackdrop" aria-hidden="true">
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle" style="max-width:900px; margin: 60px auto;">
+      <div class="auth-modal-inner" style="display:flex; gap:0; background:white; border-radius:12px; overflow:hidden;">
+        <div class="auth-left" style="flex:1; padding:28px; background:linear-gradient(135deg,#667eea,#764ba2); color:white; display:flex; flex-direction:column; justify-content:center;">
+          <h2 id="authTitle" style="margin:0 0 8px; font-size:22px;">Masuk ke Family Laundry</h2>
+          <p style="opacity:0.95;">Masuk untuk memantau pesanan, klaim promo, dan menikmati layanan kami.</p>
+        </div>
+
+        <div class="auth-right" style="flex:1; padding:22px;">
+          <button id="closeAuth" aria-label="Tutup" style="float:right;background:none;border:none;font-size:20px;cursor:pointer;">&times;</button>
+
+          <!-- Login form -->
+          <form id="authForm" style="margin-top:8px;">
+            <div id="loginFields">
+              <div style="margin-bottom:12px;">
+                <label for="authEmail" style="display:block;font-weight:600;margin-bottom:6px;">Email</label>
+                <input id="authEmail" type="email" placeholder="nama@email.com" required style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:8px;">
+              </div>
+              <div style="margin-bottom:12px;">
+                <label for="authPassword" style="display:block;font-weight:600;margin-bottom:6px;">Password</label>
+                <input id="authPassword" type="password" placeholder="Password" required style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:8px;">
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+                <button type="submit" class="btn-auth-primary" style="background:#13c3c9;color:#fff;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;">Masuk</button>
+                <a href="pages/login.html" style="margin-left:auto;color:#667eea;font-weight:600;text-decoration:none;">Halaman Masuk</a>
+              </div>
+            </div>
+          </form>
+
+          <!-- Register fields (hidden by default) -->
+          <div id="registerFields" style="display:none;margin-top:6px;">
+            <div style="margin-bottom:10px;">
+              <label for="regName" style="display:block;font-weight:600;margin-bottom:6px;">Nama Lengkap</label>
+              <input id="regName" type="text" placeholder="Nama lengkap" style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:8px;">
+            </div>
+            <div style="margin-bottom:10px;">
+              <label for="regEmail" style="display:block;font-weight:600;margin-bottom:6px;">Email</label>
+              <input id="regEmail" type="email" placeholder="nama@email.com" style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:8px;">
+            </div>
+            <div style="margin-bottom:12px;">
+              <label for="regPassword" style="display:block;font-weight:600;margin-bottom:6px;">Password</label>
+              <input id="regPassword" type="password" placeholder="Min. 6 karakter" style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:8px;">
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <button id="registerBtn" type="button" class="btn-auth-primary" style="background:#13c3c9;color:#fff;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;">Buat Akun</button>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;font-size:14px;color:#666;">Belum punya akun? <a href="#" id="switchToRegister" style="color:#13c3c9;font-weight:600;text-decoration:none;">Daftar sekarang</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- WhatsApp Float Button -->
+  <div class="whatsapp-float">
+    <a href="https://wa.me/6285745198337" target="_blank">
+      <i class="fab fa-whatsapp"></i>
+      <span>Butuh Bantuan?</span>
+    </a>
+  </div>
+
+  <!-- Live Chat Widget -->
+  <div class="live-chat-widget" id="liveChatWidget">
+    <div class="chat-header">
+      <div class="chat-agent">
+        <div class="agent-avatar">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="agent-info">
+          <strong>Customer Service</strong>
+          <span class="status online">Online</span>
+        </div>
+      </div>
+      <button class="close-chat" id="closeChat">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message bot">
+        <div class="message-content">
+          <p>Halo! Selamat datang di Family Laundry 😊 Ada yang bisa saya bantu?</p>
+          <span class="message-time" id="currentTime">10:00</span>
+        </div>
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Ketik pesan Anda...">
+      <button id="sendMessage">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Chat Toggle Button -->
+  <div class="chat-toggle" id="chatToggle">
+    <i class="fas fa-comments"></i>
+    <div class="notification-badge">1</div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar bg-white shadow-sm" style="z-index:11000;">
+    <div class="nav-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div class="logo text-xl font-bold tracking-wider">FAMILY LAUNDRY</div>
+      <div class="menu gap-6 items-center" style="display:flex;">
+        <div class="menu-item dropdown">
+            <a href="/" class="menu-link">Beranda <i class="fas fa-caret-down" aria-hidden="true"></i></a>
+            <div class="dropdown-menu">
+              <a href="/#reservasi">Reservasi</a>
+              <a href="/#layanan">Layanan</a>
+              <a href="/#harga">Daftar Harga</a>
+              <a href="/#outlet">Outlet</a>
+              <a href="/#tracking">Lacak Pesanan</a>
+              <a href="/#testimoni">Testimoni</a>
+            </div>
+        </div>
+        <a href="pages/about.html" class="menu-link">Tentang Kami</a>
+        <a href="pages/services.html" class="menu-link">Layanan</a>
+        <a href="pages/faq.html" class="menu-link">FAQ</a>
+        <a href="pages/contact.html" class="menu-link">Kontak</a>
+        <a href="pages/blog.html" class="menu-link">Tips Laundry</a>
+      </div>
+      <div class="nav-actions flex items-center gap-3" id="authButtons">
+        <a href="#reservasi" class="btn btn-outline btn-large inline-block px-4 py-2 border rounded-md">Pesan Sekarang</a>
+        <!-- Guest buttons (shown when not logged in) -->
+        <div id="guestButtons">
+          <a href="pages/login.html" class="btn btn-primary btn-large inline-flex items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded-md"><i class="fas fa-sign-in-alt" aria-hidden="true"></i> Masuk</a>
+        </div>
+        <!-- User profile dropdown (shown when logged in) -->
+        <div id="userProfile" style="display:none; position:relative;">
+          <button id="profileButton" class="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white hover:bg-teal-600 transition" style="border-radius: 0.375rem;">
+            <i class="fas fa-user-circle text-xl"></i>
+            <span id="userName">User</span>
+            <i class="fas fa-caret-down"></i>
+          </button>
+          <div id="profileDropdown" class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border hidden" style="z-index:1000;">
+            <div class="px-4 py-3 border-b">
+              <p class="text-sm font-semibold text-gray-900" id="userNameFull">User Name</p>
+              <p class="text-xs text-gray-500" id="userEmail">user@email.com</p>
+            </div>
+            <div class="py-2">
+              <a href="pages/dashboard.html" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+              </a>
+              <hr class="my-2">
+              <button id="logoutBtn" class="flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 w-full text-left">
+                <i class="fas fa-sign-out-alt"></i> Keluar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header Section -->
+  <header class="header bg-gradient-to-r from-teal-400 to-teal-300 text-white" id="beranda">
+    <div class="header-container max-w-7xl mx-auto px-4 py-20 lg:py-28 flex items-center gap-8">
+      <div class="headline max-w-2xl">
+        <h1 class="text-3xl md:text-4xl font-extrabold">Layanan Laundry Terpercaya di Tulungagung</h1>
+        <p class="subtitle mt-4 text-lg md:text-xl text-teal-50">Cucian bersih, wangi, dan higienis dengan pelayanan profesional!</p>
+        <div class="highlight-boxes">
+          <div class="highlight-box">
+            <i class="fas fa-shuttle-van"></i>
+            <span>Antar Jemput Area Tulungagung</span>
+          </div>
+          <div class="highlight-box">
+            <i class="fas fa-tag"></i>
+            <span>Harga mulai dari Rp6.000</span>
+          </div>
+          <div class="highlight-box">
+            <i class="fas fa-star"></i>
+            <span>Bersih, Wangi & Higienis</span>
+          </div>
+        </div>
+        <div class="header-actions mt-6 flex gap-3">
+          <a href="#reservasi" class="btn-primary inline-block bg-white text-teal-600 px-5 py-3 rounded-full font-semibold shadow">Pesan Sekarang</a>
+          <a href="#tracking" class="btn-secondary inline-block border border-white text-white px-5 py-3 rounded-full">Lacak Pesanan</a>
+        </div>
+      </div>
+      <div class="illustration">
+        <div class="floating-element element-1">
+          <i class="fas fa-tshirt"></i>
+        </div>
+        <div class="floating-element element-2">
+          <i class="fas fa-soap"></i>
+        </div>
+        <div class="floating-element element-3">
+          <i class="fas fa-truck"></i>
+        </div>
+        <div class="main-illustration">
+           <img src="pages/logo-removebg-preview.png" alt="Laundry Icon" style="width:425px; height: 425px;">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick Actions (unique cards for homepage navigation) -->
+  <section class="quick-actions py-12" aria-label="Tindakan Cepat">
+    <div class="container max-w-7xl mx-auto px-4">
+      <h2 class="sr-only">Aksi Cepat</h2>
+      <div class="quick-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a class="quick-card flex items-start gap-4 p-6 bg-white rounded-xl shadow hover:shadow-md transition" href="#reservasi" title="Reservasi">
+          <div class="card-icon text-2xl text-teal-500"><i class="fas fa-calendar-plus"></i></div>
+          <div class="card-body">
+            <h3 class="text-lg font-semibold">Reservasi</h3>
+            <p class="text-sm text-gray-600">Jadwalkan pickup laundry Anda dengan cepat dan mudah.</p>
+          </div>
+        </a>
+
+        <a class="quick-card flex items-start gap-4 p-6 bg-white rounded-xl shadow hover:shadow-md transition" href="#layanan" title="Layanan">
+          <div class="card-icon text-2xl text-teal-500"><i class="fas fa-concierge-bell"></i></div>
+          <div class="card-body">
+            <h3 class="text-lg font-semibold">Layanan</h3>
+            <p class="text-sm text-gray-600">Lihat semua layanan kami: kiloan, cuci & setrika, sepatu, tas, dll.</p>
+          </div>
+        </a>
+
+        <a class="quick-card flex items-start gap-4 p-6 bg-white rounded-xl shadow hover:shadow-md transition" href="#harga" title="Daftar Harga">
+          <div class="card-icon text-2xl text-teal-500"><i class="fas fa-tags"></i></div>
+          <div class="card-body">
+            <h3 class="text-lg font-semibold">Daftar Harga</h3>
+            <p class="text-sm text-gray-600">Cek tarif terbaru untuk setiap jenis layanan.</p>
+          </div>
+        </a>
+
+        <a class="quick-card flex items-start gap-4 p-6 bg-white rounded-xl shadow hover:shadow-md transition" href="#outlet" title="Outlet">
+          <div class="card-icon text-2xl text-teal-500"><i class="fas fa-store"></i></div>
+          <div class="card-body">
+            <h3 class="text-lg font-semibold">Outlet</h3>
+            <p class="text-sm text-gray-600">Temukan outlet terdekat, alamat, dan jam buka kami.</p>
+          </div>
+        </a>
+
+        <a class="quick-card flex items-start gap-4 p-6 bg-white rounded-xl shadow hover:shadow-md transition" href="#tracking" title="Lacak Pesanan">
+          <div class="card-icon text-2xl text-teal-500"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="card-body">
+            <h3 class="text-lg font-semibold">Lacak Pesanan</h3>
+            <p class="text-sm text-gray-600">Masukkan kode pesanan atau nomor untuk memeriksa status.</p>
+          </div>
+        </a>
+
+        <a class="quick-card flex items-start gap-4 p-6 bg-white rounded-xl shadow hover:shadow-md transition" href="#testimoni" title="Testimoni">
+          <div class="card-icon text-2xl text-teal-500"><i class="fas fa-star"></i></div>
+          <div class="card-body">
+            <h3 class="text-lg font-semibold">Testimoni</h3>
+            <p class="text-sm text-gray-600">Baca ulasan pelanggan dan pengalaman mereka dengan layanan kami.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Real-time Tracking Section -->
+  <section class="tracking-section py-12 bg-gray-50" id="tracking">
+    <div class="container max-w-4xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-2">Lacak Pesanan Anda</h2>
+      <p class="section-subtitle text-gray-600 mb-6">🔓 Tidak Perlu Login! Cukup masukkan nomor pesanan atau nomor HP Anda</p>
+      <div class="tracking-container grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        <div class="tracking-form bg-white p-6 rounded-lg shadow-sm">
+          <div class="flex gap-4 items-center">
+            <label for="trackingInput" class="text-base font-medium text-gray-700 whitespace-nowrap" style="margin-bottom: 4px;">Masukkan Kode Pesanan atau Nomor HP&nbsp;&nbsp;</label>
+            <input type="text" placeholder="Contoh: FL-20251125-004 atau 0812345678" id="trackingInput" class="border border-gray-300 rounded-md px-4 py-3 flex-1 focus:outline-none focus:ring-2 focus:ring-teal-300" style="height: 48px;">
+            <button onclick="doTrackOrder()" class="btn-track bg-teal-500 text-white px-6 py-3 rounded-md hover:bg-teal-600 whitespace-nowrap flex items-center gap-2" style="height: 48px;">
+              <i class="fas fa-search"></i>
+              <span>Lacak</span>
+            </button>
+          </div>
+          <p class="text-sm text-gray-500 mt-3"><i class="fas fa-info-circle"></i> <strong>Tips:</strong> Nomor pesanan bisa ditemukan di nota atau SMS konfirmasi</p>
+        </div>
+
+        <div>
+          <div class="tracking-result bg-white p-6 rounded-lg shadow-sm mb-4" id="trackingResult">
+            <div class="result-placeholder text-center text-gray-600">
+              <i class="fas fa-box-open text-3xl mb-3"></i>
+              <p class="text-base">Masukkan kode pesanan (FL202511001) atau nomor HP untuk melacak status laundry Anda</p>
+              <p class="text-sm text-gray-400 mt-2">Tidak perlu login atau daftar akun</p>
+            </div>
+          </div>
+
+          <div class="tracking-steps flex items-center justify-between mt-4 space-x-3">
+            <div class="step flex items-center gap-2 text-sm" data-status="pesanan_diterima">
+              <div class="step-icon">📦</div>
+              <span>Diterima</span>
+            </div>
+            <div class="step flex items-center gap-2 text-sm" data-status="dalam_pencucian">
+              <div class="step-icon">🧼</div>
+              <span>Pencucian</span>
+            </div>
+            <div class="step flex items-center gap-2 text-sm" data-status="disetrika">
+              <div class="step-icon">🔥</div>
+              <span>Disetrika</span>
+            </div>
+            <div class="step flex items-center gap-2 text-sm" data-status="dalam_pengiriman">
+              <div class="step-icon">🚚</div>
+              <span>Pengiriman</span>
+            </div>
+            <div class="step flex items-center gap-2 text-sm" data-status="selesai">
+              <div class="step-icon">✅</div>
+              <span>Selesai</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="layanan-section py-12" id="layanan">
+    <div class="container max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-4">Layanan Family Laundry</h2>
+      <div class="layanan-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="layanan-item bg-white p-4 rounded-lg shadow-sm flex flex-col items-center text-center" data-category="regular">
+          <lottie-player src="json/kiloan.json" background="transparent" speed="1" style="width:96px; height:96px;" loop class="mb-2 mx-auto" role="img" aria-label="Laundry Kiloan animation"></lottie-player>
+          <span class="font-semibold">Laundry Kiloan</span>
+          <p class="text-sm text-gray-600 mt-2">Rp 6.000/kg</p>
+        </div>
+        <div class="layanan-item bg-white p-4 rounded-lg shadow-sm flex flex-col items-center text-center" data-category="regular">
+          <lottie-player src="json/cuci-Setrika.json" background="transparent" speed="1" style="width:96px; height:96px;" loop class="mb-2 mx-auto" role="img" aria-label="Cuci dan Setrika animation"></lottie-player>
+          <span class="font-semibold">Cuci & Setrika</span>
+          <p class="text-sm text-gray-600 mt-2">Rp 7.000/kg</p>
+        </div>
+        <div class="layanan-item bg-white p-4 rounded-lg shadow-sm flex flex-col items-center text-center" data-category="special">
+          <lottie-player src="json/gorden.json" background="transparent" speed="1" style="width:96px; height:96px;" loop class="mb-2 mx-auto" role="img" aria-label="Laundry Gorden animation"></lottie-player>
+          <span class="font-semibold">Laundry Gorden</span>
+          <p class="text-sm text-gray-600 mt-2">Rp 15.000/m²</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Table Section -->
+  <section class="pricing-section py-12" id="harga">
+    <div class="container max-w-4xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-4">Daftar Harga Terbaru</h2>
+      <div class="pricing-table bg-white rounded-lg shadow-sm overflow-hidden">
+        <table class="w-full text-left table-auto">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-3 text-sm font-medium">Jenis Layanan</th>
+              <th class="px-4 py-3 text-sm font-medium">Harga Reguler</th>
+              <th class="px-4 py-3 text-sm font-medium">Estimasi Waktu</th>
+              <th class="px-4 py-3 text-sm font-medium">Aksi</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y">
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3">Laundry Kiloan</td>
+              <td class="px-4 py-3">Rp 6.000/kg</td>
+              <td class="px-4 py-3">24-48 jam</td>
+              <td class="px-4 py-3"><button class="btn-order bg-teal-500 text-white px-3 py-1 rounded" data-service="kiloan">Pesan</button></td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3">Cuci & Setrika</td>
+              <td class="px-4 py-3">Rp 7.000/kg</td>
+              <td class="px-4 py-3">24-48 jam</td>
+              <td class="px-4 py-3"><button class="btn-order bg-teal-500 text-white px-3 py-1 rounded" data-service="cuci-setrika">Pesan</button></td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3">Laundry Gorden</td>
+              <td class="px-4 py-3">Rp 15.000/m²</td>
+              <td class="px-4 py-3">2-3 hari</td>
+              <td class="px-4 py-3"><button class="btn-order bg-teal-500 text-white px-3 py-1 rounded" data-service="gorden">Pesan</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Outlet Locator Section -->
+  <section class="outlet-section py-12 bg-white" id="outlet">
+    <div class="container max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-4">Lokasi Outlet Kami</h2>
+      <div class="outlet-content grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        <div class="outlet-info">
+          <div class="outlet-details bg-gray-50 p-6 rounded-lg">
+            <h3 class="text-xl font-semibold mb-2">Family Laundry</h3>
+            <div class="outlet-address flex items-start gap-3 mb-3">
+              <i class="fas fa-map-marker-alt text-teal-500 mt-1"></i>
+              <span>Jl. Trunojoyo, Tebokan, Boro, Kec. Kedungwaru<br>Kabupaten Tulungagung, Jawa Timur 66229</span>
+            </div>
+            <div class="outlet-hours flex items-center gap-3 mb-2">
+              <i class="fas fa-clock text-gray-500"></i>
+              <span>Setiap Hari: 07:00 - 22:00 WIB</span>
+            </div>
+            <div class="outlet-phone flex items-center gap-3 mb-2">
+              <i class="fas fa-phone text-gray-500"></i>
+              <span>0857-4519-8337</span>
+            </div>
+            <div class="outlet-whatsapp flex items-center gap-3 mb-4">
+              <i class="fab fa-whatsapp text-green-500"></i>
+              <span>0857-4519-8337</span>
+            </div>
+            <div class="outlet-features grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+              <div class="feature flex items-center gap-2"><i class="fas fa-shuttle-van text-teal-500"></i><span>Gratis Antar Jemput</span></div>
+              <div class="feature flex items-center gap-2"><i class="fas fa-parking text-teal-500"></i><span>Parkir Luas</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="outlet-map h-64 md:h-auto">
+          <iframe class="w-full h-full rounded-lg"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.591866127477!2d111.91020427497798!3d-8.004813981878743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78ee1d7aef1def%3A0xb7c6bd670e1dbef6!2sBoro%2C%20Kedungwaru%2C%20Tulungagung%20Regency%2C%20East%20Java!5e0!3m2!1sen!2sid!4v1698637547646!5m2!1sen!2sid"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section py-12 bg-gray-50">
+    <div class="container max-w-6xl mx-auto px-4">
+      <div class="about-container grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <div class="about-img flex items-center gap-4">
+          <div class="placeholder-image bg-white p-6 rounded-lg shadow-sm text-4xl text-teal-500">
+            <i class="fas fa-store"></i>
+          </div>
+          <div class="about-experience">
+            <div class="about-experience-big text-3xl font-bold">5+</div>
+            <div class="about-experience-text text-gray-600">Tahun Pengalaman</div>
+          </div>
+        </div>
+        <div class="about-content">
+          <h2 class="about-title text-2xl font-bold mb-3">Laundry Bersih, Wangi, Higienis, dan Terpercaya</h2>
+          <p class="text-gray-700"> <strong>Family Laundry</strong> adalah layanan laundry kiloan dan satuan di Tulungagung. Kami adalah tim profesional yang selalu mengutamakan kualitas cucian & pelayanan dengan prinsip bersih, rapi, wangi, higienis & tepat waktu.</p>
+          <p class="text-gray-700 mt-3"><strong>Family Laundry</strong> menerima laundry kiloan untuk perusahaan, misal kantor, rumah sakit, asrama, pesantren, sekolah, perusahaan konveksi atau perusahaan-perusahaan semisal. Silakan hubungi kami untuk penawaran harga khusus dengan kontrak minimal 3 bulan.</p>
+            <div class="about-features grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+            <div class="feature flex items-center gap-2"><i class="fas fa-check-circle text-teal-500"></i><span>100% Bersih & Wangi</span></div>
+            <div class="feature flex items-center gap-2"><i class="fas fa-check-circle text-teal-500"></i><span>Staf Profesional</span></div>
+            <div class="feature flex items-center gap-2"><i class="fas fa-check-circle text-teal-500"></i><span>Deterjen Ramah Lingkungan</span></div>
+            <div class="feature flex items-center gap-2"><i class="fas fa-check-circle text-teal-500"></i><span>Jaminan Tepat Waktu</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="why-section py-12">
+    <div class="container max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-4">Mengapa Harus Family Laundry?</h2>
+      <div class="why-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="why-card bg-white p-4 rounded-lg shadow-sm">
+          <div class="why-icon text-2xl mb-2">🏆</div>
+          <h3 class="font-semibold">Merk Terpecaya</h3>
+          <p class="text-sm text-gray-600 mt-2">Sudah dipercaya oleh ribuan pelanggan di Tulungagung dan sekitarnya. Kami memberikan layanan terbaik dengan standar kualitas yang konsisten.</p>
+        </div>
+        <div class="why-card bg-white p-4 rounded-lg shadow-sm">
+          <div class="why-icon text-2xl mb-2">👨‍💼</div>
+          <h3 class="font-semibold">Tim Professional</h3>
+          <p class="text-sm text-gray-600 mt-2">Didukung oleh tim yang berpengalaman dan terlatih dalam bidang laundry. Setiap staff kami melalui program pelatihan khusus untuk memastikan kualitas cucian terbaik untuk Anda.</p>
+        </div>
+        <div class="why-card bg-white p-4 rounded-lg shadow-sm">
+          <div class="why-icon text-2xl mb-2">⭐</div>
+          <h3 class="font-semibold">Kualitas Terjamin</h3>
+          <p class="text-sm text-gray-600 mt-2">Kami menggunakan deterjen berkualitas dan proses yang higienis untuk hasil cucian yang bersih, wangi, dan terawat. Setiap pakaian ditangani dengan perhatian khusus.</p>
+        </div>
+        <div class="why-card bg-white p-4 rounded-lg shadow-sm">
+          <div class="why-icon text-2xl mb-2">💳</div>
+          <h3 class="font-semibold">Pembayaran Mudah</h3>
+          <p class="text-sm text-gray-600 mt-2">Dukung berbagai metode pembayaran mulai dari tunai, transfer bank, e-wallet, hingga QRIS. Proses pembayaran yang cepat dan aman untuk kenyamanan Anda.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Delivery & Payment Section -->
+  <section class="delivery-payment-section py-12 bg-gray-50">
+    <div class="container max-w-6xl mx-auto px-4">
+      <div class="delivery-content grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        <div class="delivery-text">
+          <span class="section-badge text-sm text-teal-600">Antar Jemput -</span>
+          <h2 class="text-2xl font-bold mt-2">Layanan <span class="highlight text-teal-600">Antar Jemput</span> Gratis</h2>
+          <p class="text-gray-700 mt-3">Kami menyediakan layanan antar jemput gratis untuk kenyamanan Anda. Tim profesional kami akan datang ke lokasi Anda dengan perlengkapan standar laundry untuk memastikan cucian Anda ditangani dengan baik dan higienis.</p>
+          <div class="delivery-features grid grid-cols-1 gap-3 mt-4">
+            <div class="feature flex items-center gap-3"><span class="feature-icon text-2xl">🚗</span><span>Gratis Area Tulungagung</span></div>
+            <div class="feature flex items-center gap-3"><span class="feature-icon text-2xl">🛵</span><span>Driver Professional</span></div>
+            <div class="feature flex items-center gap-3"><span class="feature-icon text-2xl">🧼</span><span>Perlengkapan Standar</span></div>
+          </div>
+        </div>
+
+        <div class="delivery-image flex items-center justify-center">
+          <img src="pages/josjis1.jpg" alt="Layanan Antar Jemput" class="object-contain rounded-lg shadow-sm border-2 border-gray-300" style="width: 600px; height: 425px;">
+        </div>
+      </div>
+
+      <div class="payment-content mt-8">
+        <div class="payment-text text-center mb-6">
+          <h3 class="text-2xl font-bold mb-3">Bayar Laundry, semudah bilang <span class="highlight bg-gradient-to-r from-blue-800 to-blue-400 bg-clip-text text-transparent">'Alhamdulillah'</span></h3>
+          <p class="text-gray-600">Berbagai metode pembayaran tersedia untuk kemudahan dan kenyamanan Anda. Pilih cara pembayaran yang paling sesuai dengan kebutuhan Anda.</p>
+        </div>
+
+        <div class="payment-methods-2row">
+          <!-- Baris Atas -->
+          <div class="payment-row">
+            <div class="payment-item" data-method="QRIS">
+              <div class="payment-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/QRIS_Logo.svg" alt="QRIS" loading="lazy"></div>
+            </div>
+            <div class="payment-item" data-method="OVO">
+              <div class="payment-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Logo_ovo_purple.svg/2560px-Logo_ovo_purple.svg.png" alt="OVO" loading="lazy"></div>
+            </div>
+            <div class="payment-item" data-method="Gopay">
+              <div class="payment-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/2560px-Gopay_logo.svg.png" alt="Gopay" loading="lazy"></div>
+            </div>
+            <div class="payment-item" data-method="Dana">
+              <div class="payment-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/2560px-Logo_dana_blue.svg.png" alt="Dana" loading="lazy"></div>
+            </div>
+          </div>
+
+          <!-- Baris Bawah -->
+          <div class="payment-row">
+            <div class="payment-item" data-method="ShopeePay">
+              <div class="payment-logo"><img src="https://chingu-laundry.com/wp-content/uploads/2024/08/JCB_logo.svg-8.png" alt="ShopeePay" loading="lazy"></div>
+            </div>
+            <div class="payment-item" data-method="BRI">
+              <div class="payment-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/BRI_2020.svg/1200px-BRI_2020.svg.png" alt="BRI" loading="lazy"></div>
+            </div>
+            <div class="payment-item" data-method="BCA">
+              <div class="payment-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/2560px-Bank_Central_Asia.svg.png" alt="BCA" loading="lazy"></div>
+            </div>
+            <div class="payment-item" data-method="SeaBank">
+              <div class="payment-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/SeaBank.svg" alt="SeaBank" loading="lazy"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- Payment Security -->
+      <div class="payment-security">
+        <div class="security-badge">
+          <i class="fas fa-shield-alt"></i>
+          Pembayaran Aman & Terjamin
+        </div>
+      </div>
+
+      <!-- Payment Info -->
+      <div class="payment-details">
+        <div class="payment-info">
+          <i class="fas fa-info-circle"></i>
+          Klik logo pembayaran untuk memilih metode yang diinginkan
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Price Calculator -->
+  <section class="calculator-section">
+    <div class="container">
+      <h2>Kalkulator Harga Laundry</h2>
+      <div class="calculator">
+        <div class="calc-inputs">
+          <div class="input-group">
+            <label for="calcServiceType">Jenis Layanan</label>
+            <select id="calcServiceType">
+              <option value="6000">Laundry Kiloan - Rp6.000/kg</option>
+              <option value="7000">Cuci & Setrika - Rp7.000/kg</option>
+              <option value="15000">Laundry Gorden - Rp15.000/m²</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="calcWeight">Berat/Jumlah</label>
+            <input type="number" id="calcWeight" placeholder="Masukkan berat (kg) atau jumlah" min="1" value="1">
+          </div>
+          <button onclick="calculatePrice()" class="btn-calculate">
+            <i class="fas fa-calculator"></i>
+            Hitung Harga
+          </button>
+        </div>
+        <div class="calc-result" id="calcResult">
+          <div class="result-header">
+            <h3>Estimasi Biaya</h3>
+          </div>
+          <div class="result-details">
+            <div class="detail-item">
+              <span>Subtotal:</span>
+              <span id="subtotalPrice">Rp 0</span>
+            </div>
+            <div class="detail-item total">
+              <span>Total Biaya:</span>
+              <span id="totalPrice">Rp 0</span>
+            </div>
+          </div>
+          <div class="result-actions">
+            <button class="btn-order-now" onclick="scrollToReservation()">
+              <i class="fas fa-shopping-cart"></i>
+              Pesan Sekarang
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="container">
+      <h2>Pertanyaan yang Sering Diajukan</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Berapa lama proses laundry biasanya?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Proses laundry reguler membutuhkan waktu 24-48 jam. Untuk layanan khusus seperti sepatu, tas, dan karpet membutuhkan waktu 2-4 hari tergantung kondisi.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Apakah ada minimum order?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Tidak ada minimum order, jadi tidak usah ragu untuk order.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Bagaimana cara cek status cucian?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Anda dapat mengecek status cucian melalui website kami di menu "Lacak Pesanan" dengan memasukkan nomor telepon atau kode transaksi Anda.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Apakah cucian dijamin bersih dan wangi?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Ya, kami menggunakan deterjen dan pewangi berkualitas tinggi dengan proses yang higienis. Jika ada ketidakpuasan, kami siap melakukan pencucian ulang.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Kenapa lebih praktis pesan dengan Login?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p><strong>Hemat waktu Anda!</strong> Dengan login, form reservasi pickup akan <strong>otomatis terisi</strong> dengan:</p>
+            <ul style="margin-top:10px; padding-left:20px;">
+              <li>✅ <strong>Nama lengkap</strong> - tidak perlu ketik lagi</li>
+              <li>✅ <strong>Nomor WhatsApp</strong> - tersimpan aman</li>
+              <li>✅ <strong>Alamat lengkap</strong> - langsung muncul</li>
+            </ul>
+            <p style="margin-top:10px;"><strong>Pesan hanya dalam 10 detik!</strong> Tanpa login? Anda harus mengisi manual setiap kali (3-5 menit). <a href="pages/login.html" style="color:#13c3c9;font-weight:600;">Login sekarang</a> atau <a href="pages/registrasi.html" style="color:#13c3c9;font-weight:600;">daftar gratis</a> untuk pengalaman lebih cepat! 🚀</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Section -->
+  <section class="blog-section">
+    <div class="container">
+      <h2>Tips & Panduan Laundry</h2>
+      <div class="blog-grid">
+        <article class="blog-card">
+          <div class="blog-image">
+            <i class="fas fa-tint"></i>
+          </div>
+          <div class="blog-content">
+            <h3>5 Cara Merawat Pakaian Putih Tetap Bersih</h3>
+            <p>Pelajari tips praktis untuk menjaga pakaian putih Anda tetap bersinar dan tidak mudah kusam...</p>
+            <a href="pages/blog.html" class="read-more">Baca Selengkapnya →</a>
+          </div>
+        </article>
+        <article class="blog-card">
+          <div class="blog-image">
+            <i class="fas fa-wind"></i>
+          </div>
+          <div class="blog-content">
+            <h3>Panduan Memilih Deterjen yang Tepat</h3>
+            <p>Ketahui perbedaan berbagai jenis deterjen dan mana yang paling cocok untuk kebutuhan laundry Anda...</p>
+            <a href="pages/blog.html" class="read-more">Baca Selengkapnya →</a>
+          </div>
+        </article>
+        <article class="blog-card">
+          <div class="blog-image">
+            <i class="fas fa-shoe-prints"></i>
+          </div>
+          <div class="blog-content">
+            <h3>Cara Merawat Sepatu Kesayangan</h3>
+            <p>Tips lengkap merawat berbagai jenis sepatu agar tetap awet dan selalu terlihat seperti baru...</p>
+            <a href="pages/blog.html" class="read-more">Baca Selengkapnya →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & Reservation Section -->
+  <section class="contact-section" id="reservasi">
+    <div class="container">
+      <div class="contact-content">
+        <div class="contact-text">
+          <h2>Cucian di rumah sudah numpuk?</h2>
+          <p>Jangan ragu untuk menghubungi kami. Komunikasikan kebutuhan laundry Anda atau langsung reservasi pickup!</p>
+          <div class="contact-info">
+            <div class="contact-item">
+              <i class="fab fa-whatsapp"></i>
+              <div>
+                <strong>WhatsApp</strong>
+                <span>0857-4519-8337</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <div>
+                <strong>Telepon</strong>
+                <span>0857-4519-8337</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <div>
+                <strong>Email</strong>
+                <span>familyloundry.id@gmail.com</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-clock"></i>
+              <div>
+                <strong>Jam Operasional</strong>
+                <span>Senin - Minggu: 7:00 - 22:00</span>
+              </div>
+            </div>
+          </div>
+          <a href="https://wa.me/6285745198337" target="_blank" class="btn-hubungi">
+            <i class="fab fa-whatsapp"></i>
+            Hubungi via WhatsApp
+          </a>
+        </div>
+
+        <!-- Reservation Form -->
+        <div class="contact-form">
+          <div class="form-header-modern">
+            <div class="form-icon-header">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3>Reservasi Pickup Laundry</h3>
+            <p>Isi form di bawah untuk jadwalkan pickup laundry Anda</p>
+          </div>
+
+          <form class="reservation-form" id="reservationForm">
+            <!-- Personal Info Section -->
+            <div class="form-section">
+              <div class="section-label">
+                <i class="fas fa-user-circle"></i>
+                <span>Informasi Pribadi</span>
+              </div>
+              <div class="form-row">
+                <div class="input-group full-width">
+                  <label for="customerName">
+                    <i class="fas fa-user"></i> Nama Lengkap
+                  </label>
+                  <input type="text" id="customerName" placeholder="Masukkan nama lengkap Anda" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="input-group">
+                  <label for="customerPhone">
+                    <i class="fab fa-whatsapp"></i> Nomor WhatsApp
+                  </label>
+                  <input type="text" id="customerPhone" placeholder="Contoh: 08123456789" required>
+                </div>
+                <div class="input-group">
+                  <label for="customerAddress">
+                    <i class="fas fa-map-marker-alt"></i> Alamat Lengkap
+                  </label>
+                  <input type="text" id="customerAddress" placeholder="Alamat lengkap untuk pickup laundry" required>
+                </div>
+              </div>
+            </div>
+
+            <!-- Service Details Section -->
+            <div class="form-section">
+              <div class="section-label">
+                <i class="fas fa-concierge-bell"></i>
+                <span>Detail Layanan</span>
+              </div>
+              <div class="form-row">
+                <div class="input-group full-width">
+                  <label for="serviceType">
+                    <i class="fas fa-list-ul"></i> Jenis Layanan
+                  </label>
+                  <select id="serviceType" required>
+                    <option value="">-- Pilih Jenis Layanan --</option>
+                    <option value="kiloan">🧺 Laundry Kiloan - Rp 6.000/kg</option>
+                    <option value="cuci-setrika">👕 Cuci & Setrika - Rp 7.000/kg</option>
+                    <option value="gorden">🪟 Laundry Gorden - Rp 15.000/m²</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="input-group">
+                  <label for="pickupDate">
+                    <i class="fas fa-calendar-alt"></i> Tanggal Pickup
+                  </label>
+                  <input type="date" id="pickupDate" required>
+                </div>
+                <div class="input-group">
+                  <label for="pickupTime">
+                    <i class="fas fa-clock"></i> Waktu Pickup
+                  </label>
+                  <input type="time" id="pickupTime" required>
+                </div>
+              </div>
+            </div>
+
+            <!-- Additional Notes Section -->
+            <div class="form-section">
+              <div class="section-label">
+                <i class="fas fa-comment-dots"></i>
+                <span>Catatan Tambahan</span>
+              </div>
+              <div class="form-row">
+                <div class="input-group full-width">
+                  <label for="specialInstructions">
+                    <i class="fas fa-edit"></i> Instruksi Khusus (Opsional)
+                  </label>
+                  <textarea id="specialInstructions" placeholder="Contoh: Pakai pewangi lavender, jangan setrika kaos polo, pisahkan pakaian berwarna, dll." rows="4"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-actions">
+              <button type="submit" class="btn-pickup">
+                <i class="fas fa-truck-pickup"></i>
+                <span>Pesan Pickup Sekarang</span>
+              </button>
+              <p class="form-footer-note">
+                <i class="fas fa-info-circle"></i> Kami akan menghubungi Anda untuk konfirmasi
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial Section -->
+  <section class="testimoni-section" id="testimoni">
+    <div class="container">
+      <h2 class="testimoni-title">Apa kata pelanggan setia Kami?</h2>
+      <div class="testimoni-list">
+        <div class="testimoni-card">
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p>"Wangi, rapi, dan ada delivery gratis. Di Family Laundry saya gak khawatir kehabisan baju! Pelayanannya cepat dan hasilnya memuaskan."</p>
+          <div class="testimoni-user">
+            <div class="avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="user-info">
+              <h4>Lillian Bell</h4>
+              <span>Pelanggan sejak 2023</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimoni-card">
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p>"Baju kotor numpuk, untung nemu Family Laundry. Pelayanannya ramah dan hasil cucian bersih banget! Recommended buat warga Tulungagung."</p>
+          <div class="testimoni-user">
+            <div class="avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="user-info">
+              <h4>Arief Fathur Rizqi</h4>
+              <span>Pelanggan sejak 2024</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimoni-card">
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p>"Pelayanannya mantap, tepat waktu, dan hasilnya wangi banget. Terima kasih Family Laundry! Sudah langganan 2 tahun lebih."</p>
+          <div class="testimoni-user">
+            <div class="avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="user-info">
+              <h4>Merti</h4>
+              <span>Pelanggan sejak 2022</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Google Reviews Section -->
+  <section class="google-reviews-section">
+    <div class="container">
+      <h2>Review dari Google Business</h2>
+      <div class="google-reviews" id="googleReviews">
+        <div class="review-card">
+          <div class="review-header">
+            <div class="reviewer">
+              <div class="reviewer-avatar">A</div>
+              <div class="reviewer-info">
+                <strong>Andi Wijaya</strong>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+            <span class="review-date">2 minggu lalu</span>
+          </div>
+          <p>"Laundry terbaik yang pernah saya coba! Fast response dan hasilnya bersih banget. Recommended!"</p>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="reviewer">
+              <div class="reviewer-avatar">S</div>
+              <div class="reviewer-info">
+                <strong>Sari Dewi</strong>
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+            <span class="review-date">1 bulan lalu</span>
+          </div>
+          <p>"Driver ramah-ramah, packing rapi, dan yang penting cucian wangi dan bersih. Bakal langganan terus!"</p>
+        </div>
+      </div>
+      <div class="review-actions">
+        <a href="https://share.google/ROYMObJrOz0OmyTEG" class="btn-google-reviews" target="_blank">
+          <i class="fab fa-google"></i>
+          Lihat Semua Review di Google
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Review & Rating Section -->
+  <section class="review-section">
+    <div class="container">
+      <h2>Beri Penilaian untuk Layanan Kami</h2>
+      <div class="review-form" id="reviewForm">
+        <div class="rating-input">
+          <span>Beri Rating:</span>
+          <div class="rating-stars">
+            <span class="star" data-rating="1">★</span>
+            <span class="star" data-rating="2">★</span>
+            <span class="star" data-rating="3">★</span>
+            <span class="star" data-rating="4">★</span>
+            <span class="star" data-rating="5">★</span>
+          </div>
+          <span class="rating-text" id="ratingText">Pilih rating</span>
+        </div>
+        <div class="form-group">
+          <textarea placeholder="Bagaimana pengalaman laundry Anda? Ceritakan di sini..." rows="4" id="reviewText"></textarea>
+        </div>
+        <div class="form-group">
+          <input type="text" placeholder="Nama Anda (opsional)" id="reviewerName">
+        </div>
+        <button type="button" onclick="submitReview()" class="btn-submit-review">
+          <i class="fas fa-paper-plane"></i>
+          Kirim Review
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Section -->
+  <section class="trust-section">
+    <div class="container">
+      <h2>Lokasi Outlet Kami</h2>
+      <div class="trust-logos">
+        <div class="trust-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Desa Boro, Kec. Kedungwaru, Kab. Tulungagung</span>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">5.000+</div>
+          <div class="stat-label">Pelanggan Setia</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">1</div>
+          <div class="stat-label">Outlet Strategis</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">99%</div>
+          <div class="stat-label">Kepuasan Pelanggan</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Cucian/Minggu</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer bg-gray-50 border-t">
+    <div class="container max-w-7xl mx-auto px-4 py-12">
+      <div class="footer-content grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="footer-brand">
+          <h3>Family Laundry</h3>
+          <h4>Laundry Terpercaya</h4>
+          <p><strong>Family Laundry</strong> adalah layanan laundry kiloan dan satuan di Tulungagung. Kami adalah tim profesional yang selalu mengutamakan kualitas cucian & pelayanan dengan prinsip bersih, rapi, wangi, higienis & tepat waktu.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <div class="link-group">
+            <h5>Layanan</h5>
+            <a href="#layanan">Laundry Kiloan</a>
+            <a href="#layanan">Cuci & Setrika</a>
+            <a href="#layanan">Laundry Gorden</a>
+          </div>
+          <div class="link-group">
+            <h5>Perusahaan</h5>
+            <a href="/">Beranda</a>
+            <a href="pages/about.html">Tentang Kami</a>
+            <a href="#outlet">Outlet Kami</a>
+            <a href="#testimoni">Testimoni</a>
+            <a href="pages/blog.html">Blog</a>
+          </div>
+          <div class="link-group">
+            <h5>Bantuan</h5>
+            <a href="pages/faq.html">FAQ</a>
+            <a href="#tracking">Lacak Pesanan</a>
+            <a href="pages/contact.html">Hubungi Kami</a>
+            <a href="#layanan">Layanan Kami</a>
+            <a href="#promo">Promo</a>
+          </div>
+          <div class="link-group">
+            <h5>Kontak</h5>
+            <div class="contact-info">
+              <div class="contact-item">
+                <i class="fab fa-whatsapp"></i>
+                <span>0857-4519-8337</span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>0857-4519-8337</span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>familyloundry.id@gmail.com</span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Jl. Trunojoyo, Tebokan, Boro, Kedungwaru, Tulungagung 66229</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>Copyright © 2024 Family Laundry. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Loyalty Points Modal -->
+  <div class="modal" id="loyaltyModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Point Loyalty Anda</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="loyalty-status">
+          <div class="current-level gold">
+            <i class="fas fa-crown"></i>
+            <span>Gold Member</span>
+          </div>
+          <div class="points-balance">
+            <strong>650 Points</strong>
+            <span>Total point yang terkumpul</span>
+          </div>
+        </div>
+        <div class="loyalty-progress">
+          <div class="progress-bar">
+            <div class="progress" style="width: 65%"></div>
+          </div>
+          <div class="progress-labels">
+            <span>Gold (501+)</span>
+            <span>Next: Platinum (1001)</span>
+          </div>
+        </div>
+        <div class="rewards-available">
+          <h4>Rewards Tersedia</h4>
+          <div class="rewards-list">
+            <div class="reward-item">
+              <span>Discount 15%</span>
+              <small>500 points</small>
+              <button>Tukar</button>
+            </div>
+            <div class="reward-item">
+              <span>Free Delivery 1x</span>
+              <small>300 points</small>
+              <button>Tukar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error overlay helper: captures JS errors and shows a visible overlay so page doesn't appear blank -->
+  <script>
+    (function(){
+      function createOverlay() {
+        var o = document.createElement('div');
+        o.id = 'js-error-overlay';
+        o.style.position = 'fixed';
+        o.style.left = '0';
+        o.style.top = '0';
+        o.style.right = '0';
+        o.style.padding = '12px 20px';
+        o.style.background = 'rgba(220,20,60,0.95)';
+        o.style.color = 'white';
+        o.style.zIndex = 99999;
+        o.style.fontFamily = 'sans-serif';
+        o.style.fontSize = '14px';
+        o.style.display = 'none';
+        o.style.whiteSpace = 'pre-wrap';
+        document.addEventListener('DOMContentLoaded', function(){ document.body.appendChild(o); });
+        return o;
+      }
+      var overlay = createOverlay();
+      window.showJSError = function(msg){ try{ overlay.style.display = 'block'; overlay.textContent = 'JavaScript error:\n' + msg; }catch(e){ console.error(e); } };
+      window.addEventListener('error', function(ev){
+        try{ var m = (ev && ev.error && ev.error.message) ? ev.error.message : (ev && ev.message) ? ev.message : String(ev); showJSError(m); console.error('Captured error', ev.error || ev.message || ev); }catch(e){console.error(e)}
+      });
+      window.addEventListener('unhandledrejection', function(ev){ try{ var reason = ev.reason && ev.reason.message ? ev.reason.message : String(ev.reason); showJSError('Unhandled promise rejection: ' + reason); console.error('Unhandled rejection', ev); }catch(e){console.error(e)} });
+    })();
+  </script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/script.js"></script>
+  <script>
+    // Inline tracking function to bypass any loading issues
+    async function doTrackOrder() {
+      console.log('=== INLINE TRACK ORDER ===');
+
+      const trackingInput = document.getElementById('trackingInput');
+      const trackingResult = document.getElementById('trackingResult');
+
+      console.log('Input element:', trackingInput);
+      console.log('Result element:', trackingResult);
+
+      if (!trackingInput || !trackingResult) {
+        console.error('Elements not found!');
+        alert('Error: Form elements not found');
+        return;
+      }
+
+      const searchValue = trackingInput.value.trim();
+      console.log('Search value:', searchValue);
+
+      if (!searchValue) {
+        alert('Masukkan nomor pesanan atau HP!');
+        return;
+      }
+
+      // Show loading
+      trackingResult.innerHTML = '<div style="text-align:center;padding:20px;">Loading...</div>';
+
+      try {
+        const isOrderNumber = searchValue.toUpperCase().startsWith('FL-');
+        const params = isOrderNumber
+          ? 'orderNumber=' + encodeURIComponent(searchValue.toUpperCase())
+          : 'phone=' + encodeURIComponent(searchValue);
+
+        console.log('Fetching: /api/orders/track?' + params);
+
+        const response = await fetch('/api/orders/track?' + params);
+        console.log('Response status:', response.status);
+        console.log('Response OK:', response.ok);
+
+        const data = await response.json();
+        console.log('Response data:', data);
+
+        if (response.ok && data.success && data.data) {
+          const order = data.data;
+          console.log('Order found:', order);
+
+          trackingResult.innerHTML = `
+            <div style="background:white;padding:20px;border-radius:8px;">
+              <h3 style="margin:0 0 10px 0;color:#0d9488;">Pesanan Ditemukan!</h3>
+              <p><strong>Nomor:</strong> ${order.orderNumber}</p>
+              <p><strong>Status:</strong> ${order.status}</p>
+              <p><strong>Layanan:</strong> ${order.service ? order.service.name : '-'}</p>
+              <p><strong>Total:</strong> Rp ${Number(order.finalTotal || 0).toLocaleString('id-ID')}</p>
+              <p><strong>Alamat:</strong> ${order.address || '-'}</p>
+            </div>
+          `;
+
+          // Update tracking steps
+          if (typeof updateTrackingSteps === 'function') {
+            updateTrackingSteps(order.status);
+          }
+        } else {
+          console.log('Order not found');
+          trackingResult.innerHTML = `
+            <div style="background:#fee;padding:20px;border-radius:8px;text-align:center;">
+              <h4 style="color:#c00;margin:0 0 10px 0;">Pesanan Tidak Ditemukan</h4>
+              <p>Tidak ada pesanan dengan <strong>${searchValue}</strong></p>
+              <p style="font-size:12px;color:#666;">Debug: success=${data.success}, hasData=${!!data.data}</p>
+            </div>
+          `;
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        trackingResult.innerHTML = `
+          <div style="background:#fee;padding:20px;border-radius:8px;text-align:center;">
+            <h4 style="color:#c00;">Terjadi Kesalahan</h4>
+            <p>${error.message}</p>
+          </div>
+        `;
+      }
+    }
+  </script>
+  <script>
+    // Lazy-load Lottie animations: moves `data-src` -> `src` when visible
+    (function(){
+      // Defensive loader & starter for Lottie players.
+      // - Handles elements using `data-src` (lazy) or `src` (immediate).
+      // - Waits until the `lottie-player` custom element is defined, then
+      //   ensures `autoplay` is set and calls `.play()` to start animations.
+      function loadSrcIfNeeded(el){
+        var data = el.getAttribute('data-src');
+        if(data){ el.setAttribute('src', data); el.removeAttribute('data-src'); }
+      }
+
+      function startAllPlayers(){
+        try{
+          var players = document.querySelectorAll('lottie-player');
+          players.forEach(function(p){
+            try{
+              p.setAttribute('autoplay', '');
+              // Some player builds expose play(); call if available.
+              if(typeof p.play === 'function') p.play();
+            }catch(e){ /* ignore per-player errors */ }
+          });
+        }catch(e){ console.error('startAllPlayers error', e); }
+      }
+
+      function initLazyAndStart(){
+        var playersLazy = Array.from(document.querySelectorAll('lottie-player'));
+        if(playersLazy.length === 0) return;
+
+        // If IntersectionObserver available, prefer lazy-loading only when `data-src` present.
+        if('IntersectionObserver' in window){
+          var io = new IntersectionObserver(function(entries, obs){
+            entries.forEach(function(entry){
+              if(entry.isIntersecting){
+                var el = entry.target;
+                loadSrcIfNeeded(el);
+                try{ if(typeof el.play === 'function') el.play(); }catch(e){}
+                obs.unobserve(el);
+              }
+            });
+          }, { threshold: 0.15 });
+          playersLazy.forEach(function(p){
+            // If element already has `src`, we can start it immediately.
+            if(p.getAttribute('src')){ try{ if(typeof p.play === 'function') p.play(); }catch(e){} }
+            io.observe(p);
+          });
+        } else {
+          // Fallback: ensure src present and start all
+          playersLazy.forEach(function(p){ loadSrcIfNeeded(p); });
+          startAllPlayers();
+        }
+      }
+
+      function whenDefinedAndInit(){
+        if(window.customElements && typeof window.customElements.whenDefined === 'function'){
+          window.customElements.whenDefined('lottie-player').then(function(){
+            try{ initLazyAndStart(); startAllPlayers(); }catch(e){ console.error(e); }
+          }).catch(function(err){
+            // If for some reason the element isn't definable, still try to init after DOM ready
+            console.warn('lottie-player not defined:', err);
+            initLazyAndStart(); startAllPlayers();
+          });
+        } else {
+          // No customElements API — just init on DOM ready
+          initLazyAndStart(); startAllPlayers();
+        }
+      }
+
+      if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', whenDefinedAndInit);
+      else whenDefinedAndInit();
+    })();
+  </script>
+
+  <!-- User Profile Management -->
+  <script>
+    (function() {
+      // Check if user is logged in
+      function checkLoginStatus() {
+        console.log('🔍 Checking login status...');
+        const user = localStorage.getItem('userData');
+        const token = localStorage.getItem('authToken');
+
+        console.log('User from localStorage:', user);
+        console.log('Token from localStorage:', token ? 'EXISTS' : 'NULL');
+
+        if (user && token) {
+          try {
+            const userData = JSON.parse(user);
+            console.log('✅ User data parsed:', userData);
+            showUserProfile(userData);
+          } catch (e) {
+            console.error('❌ Failed to parse user data:', e);
+            showGuestButtons();
+          }
+        } else {
+          console.log('⚠️ No user or token found, showing guest buttons');
+          showGuestButtons();
+        }
+      }
+
+      // Show user profile dropdown
+      function showUserProfile(user) {
+        console.log('✅ User logged in:', user);
+        const guestButtons = document.getElementById('guestButtons');
+        const userProfile = document.getElementById('userProfile');
+
+        if (guestButtons) {
+          guestButtons.style.display = 'none';
+          console.log('Guest buttons hidden');
+        }
+
+        if (userProfile) {
+          userProfile.style.display = 'flex';
+          userProfile.style.alignItems = 'center';
+          console.log('User profile shown');
+
+          // Set user info
+          const userName = document.getElementById('userName');
+          const userNameFull = document.getElementById('userNameFull');
+          const userEmail = document.getElementById('userEmail');
+
+          if (userName) {
+            userName.textContent = user.name || 'User';
+            console.log('User name set:', user.name);
+          }
+          if (userNameFull) userNameFull.textContent = user.name || 'User';
+          if (userEmail) userEmail.textContent = user.email || '';
+        }
+      }
+
+      // Show guest buttons
+      function showGuestButtons() {
+        const guestButtons = document.getElementById('guestButtons');
+        const userProfile = document.getElementById('userProfile');
+
+        if (guestButtons) guestButtons.style.display = 'block';
+        if (userProfile) userProfile.style.display = 'none';
+      }
+
+      // Toggle dropdown
+      function setupDropdown() {
+        const profileButton = document.getElementById('profileButton');
+        const profileDropdown = document.getElementById('profileDropdown');
+
+        if (profileButton && profileDropdown) {
+          profileButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            profileDropdown.classList.toggle('hidden');
+          });
+
+          // Close dropdown when clicking outside
+          document.addEventListener('click', function() {
+            profileDropdown.classList.add('hidden');
+          });
+        }
+      }
+
+      // Logout function
+      function setupLogout() {
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', function() {
+            // Clear localStorage
+            localStorage.removeItem('userData');
+            localStorage.removeItem('authToken');
+
+            // Reload page to show guest state
+            window.location.reload();
+          });
+        }
+      }
+
+      // Initialize on page load - using window.onload for guaranteed element availability
+      window.addEventListener('load', function() {
+        console.log('🚀 Page fully loaded, initializing profile system...');
+        console.log('userProfile element:', document.getElementById('userProfile'));
+        console.log('guestButtons element:', document.getElementById('guestButtons'));
+        checkLoginStatus();
+        setupDropdown();
+        setupLogout();
+        autoFillReservationForm();
+      })
+    })();
+  </script>
+
+  <!-- Auto-fill Reservation Form for Logged-in Users -->
+  <script>
+    function autoFillReservationForm() {
+      const userData = localStorage.getItem('userData');
+      const token = localStorage.getItem('authToken');
+
+      if (userData && token) {
+        try {
+          const user = JSON.parse(userData);
+          console.log('✅ Auto-filling reservation form for:', user);
+          console.log('📍 Address from user data:', user.address);
+
+          // Auto-fill form fields
+          const nameField = document.getElementById('customerName');
+          const phoneField = document.getElementById('customerPhone');
+          const addressField = document.getElementById('customerAddress');
+
+          // Track which fields were filled
+          let filledFields = [];
+
+          if (nameField && user.name) {
+            nameField.value = user.name;
+            nameField.readOnly = true;
+            nameField.style.backgroundColor = '#f3f4f6';
+            filledFields.push('nama');
+          }
+
+          if (phoneField && user.phone) {
+            phoneField.value = user.phone;
+            phoneField.readOnly = true;
+            phoneField.style.backgroundColor = '#f3f4f6';
+            filledFields.push('telepon');
+          }
+
+          if (addressField && user.address) {
+            addressField.value = user.address;
+            addressField.readOnly = true;
+            addressField.style.backgroundColor = '#f3f4f6';
+            filledFields.push('alamat');
+          }
+
+          // Add info message only if at least one field was filled
+          const form = document.getElementById('reservationForm');
+          if (form && filledFields.length > 0 && !document.getElementById('autoFillInfo')) {
+            const infoDiv = document.createElement('div');
+            infoDiv.id = 'autoFillInfo';
+            infoDiv.style.cssText = 'background:#dbeafe; border:1px solid #3b82f6; border-radius:8px; padding:12px; margin-bottom:15px; color:#1e40af; font-size:14px;';
+
+            if (user.address) {
+              infoDiv.innerHTML = '<i class="fas fa-info-circle"></i> <strong>Data Anda sudah terisi otomatis.</strong> Jika ada perubahan alamat/nomor, silakan update di Dashboard Anda.';
+            } else {
+              infoDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> <strong>Alamat belum tersimpan.</strong> Silakan isi alamat lengkap Anda atau update di Dashboard.';
+              infoDiv.style.cssText = 'background:#fef3c7; border:1px solid #f59e0b; border-radius:8px; padding:12px; margin-bottom:15px; color:#92400e; font-size:14px;';
+            }
+
+            form.insertBefore(infoDiv, form.firstChild);
+          }
+
+          console.log('✅ Fields filled:', filledFields.join(', '));
+        } catch (e) {
+          console.error('Error auto-filling form:', e);
+        }
+      } else {
+        console.log('⚠️ User not logged in, manual form entry required');
+      }
+    }
+
+    // Re-fill form when navigating back to reservation section
+    document.addEventListener('DOMContentLoaded', function() {
+      const reservationLinks = document.querySelectorAll('a[href*="#reservasi"]');
+      reservationLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          setTimeout(autoFillReservationForm, 500);
+        });
+      });
+    });
+  </script>
+
+  <!-- Track Order Script -->
+  <script>
+    async function trackOrder() {
+      const input = document.getElementById('trackingInput').value.trim();
+      const resultDiv = document.getElementById('trackingResult');
+
+      if (!input) {
+        resultDiv.innerHTML = `
+          <div class="text-center text-red-600">
+            <i class="fas fa-exclamation-circle text-3xl mb-3"></i>
+            <p>Mohon masukkan nomor pesanan atau nomor HP</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Show loading
+      resultDiv.innerHTML = `
+        <div class="text-center text-gray-600">
+          <i class="fas fa-spinner fa-spin text-3xl mb-3"></i>
+          <p>Mencari pesanan...</p>
+        </div>
+      `;
+
+      try {
+        // Determine if input is order number or phone
+        const isOrderNumber = input.toUpperCase().startsWith('FL');
+        const queryParam = isOrderNumber ? `orderNumber=${input}` : `phone=${input}`;
+
+        const response = await fetch(`http://localhost:3001/api/orders/track?${queryParam}`);
+        const data = await response.json();
+
+        if (data.success && data.data && data.data.length > 0) {
+          const order = data.data[0]; // Show first/latest order
+          displayOrderStatus(order);
+        } else {
+          resultDiv.innerHTML = `
+            <div class="text-center text-yellow-600">
+              <i class="fas fa-search text-3xl mb-3"></i>
+              <p class="font-semibold">Pesanan tidak ditemukan</p>
+              <p class="text-sm text-gray-500 mt-2">Periksa kembali nomor pesanan atau nomor HP Anda</p>
+            </div>
+          `;
+        }
+      } catch (error) {
+        console.error('Error tracking order:', error);
+        resultDiv.innerHTML = `
+          <div class="text-center text-red-600">
+            <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
+            <p>Terjadi kesalahan saat melacak pesanan</p>
+            <p class="text-sm text-gray-500 mt-2">Silakan coba lagi nanti</p>
+          </div>
+        `;
+      }
+    }
+
+    function displayOrderStatus(order) {
+      const resultDiv = document.getElementById('trackingResult');
+      const statusLabels = {
+        'pending': 'Menunggu Konfirmasi',
+        'confirmed': 'Dikonfirmasi',
+        'picked_up': 'Sudah Dijemput',
+        'processing': 'Dalam Proses',
+        'washing': 'Dalam Pencucian',
+        'drying': 'Dalam Pengeringan',
+        'ironing': 'Dalam Penyetrikaan',
+        'quality_check': 'Quality Check',
+        'ready': 'Siap Diambil',
+        'delivering': 'Dalam Pengiriman',
+        'completed': 'Selesai',
+        'cancelled': 'Dibatalkan'
+      };
+
+      const statusColors = {
+        'pending': 'bg-yellow-100 text-yellow-800',
+        'confirmed': 'bg-blue-100 text-blue-800',
+        'picked_up': 'bg-indigo-100 text-indigo-800',
+        'processing': 'bg-purple-100 text-purple-800',
+        'washing': 'bg-cyan-100 text-cyan-800',
+        'drying': 'bg-teal-100 text-teal-800',
+        'ironing': 'bg-orange-100 text-orange-800',
+        'quality_check': 'bg-pink-100 text-pink-800',
+        'ready': 'bg-green-100 text-green-800',
+        'delivering': 'bg-blue-100 text-blue-800',
+        'completed': 'bg-green-500 text-white',
+        'cancelled': 'bg-red-100 text-red-800'
+      };
+
+      const statusLabel = statusLabels[order.status] || order.status;
+      const statusColor = statusColors[order.status] || 'bg-gray-100 text-gray-800';
+
+      // Format items
+      const itemsHtml = order.items.map(item => `
+        <li class="text-sm">${item.serviceName} (${item.quantity}x) - Rp ${item.price.toLocaleString('id-ID')}</li>
+      `).join('');
+
+      resultDiv.innerHTML = `
+        <div class="space-y-4">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="font-bold text-lg">${order.orderNumber}</h3>
+              <p class="text-sm text-gray-600">${order.customerName}</p>
+              <p class="text-xs text-gray-500">${order.customerPhone}</p>
+            </div>
+            <span class="px-3 py-1 rounded-full text-sm font-semibold ${statusColor}">
+              ${statusLabel}
+            </span>
+          </div>
+          <div>
+            <p class="text-sm font-semibold mb-2">Layanan:</p>
+            <ul class="list-disc list-inside space-y-1">
+              ${itemsHtml}
+            </ul>
+          </div>
+          <div class="flex justify-between items-center pt-3 border-t">
+            <span class="font-semibold">Total:</span>
+            <span class="text-xl font-bold text-teal-600">Rp ${order.totalAmount.toLocaleString('id-ID')}</span>
+          </div>
+          <div class="text-xs text-gray-500">
+            <p>Tanggal Pesan: ${new Date(order.createdAt).toLocaleDateString('id-ID')}</p>
+            <p>Update Terakhir: ${new Date(order.updatedAt).toLocaleDateString('id-ID')}</p>
+          </div>
+        </div>
+      `;
+
+      // Update progress steps
+      updateProgressSteps(order.status);
+    }
+
+    function updateProgressSteps(currentStatus) {
+      const steps = document.querySelectorAll('.tracking-steps .step');
+      const statusOrder = ['pending', 'washing', 'ironing', 'ready', 'completed'];
+
+      // Map current status to progress steps
+      const statusMap = {
+        'pending': 0,
+        'confirmed': 0,
+        'picked_up': 1,
+        'processing': 1,
+        'washing': 1,
+        'drying': 1,
+        'ironing': 2,
+        'quality_check': 2,
+        'ready': 3,
+        'delivering': 3,
+        'completed': 4
+      };
+
+      const currentIndex = statusMap[currentStatus] || 0;
+
+      steps.forEach((step, index) => {
+        if (index <= currentIndex) {
+          step.classList.add('active');
+          step.querySelector('.step-icon').style.opacity = '1';
+        } else {
+          step.classList.remove('active');
+          step.querySelector('.step-icon').style.opacity = '0.4';
+        }
+      });
+    }
+
+    // Allow Enter key to trigger search
+    document.getElementById('trackingInput')?.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        trackOrder();
+      }
+    });
+  </script>
+</body>
+</html>
